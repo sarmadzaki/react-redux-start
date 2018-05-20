@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+// import { connect } from 'react-redux'
 class Todo extends Component {
     constructor(props) {
         super(props);
@@ -13,4 +13,4 @@ class Todo extends Component {
         )
     }
 }
-export default connect()(Todo);
+export default (Todo);

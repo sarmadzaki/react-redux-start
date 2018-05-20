@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './App.css';
-import Todo from '../Todo/todo'
+// import Todo from '../Todo/todo'
+import Post from "../Post/Posts"
+import PostForm from '../Post/Postform';
 class App extends Component {
   render() {
     return (
@@ -10,7 +12,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React and Redux</h1>
         </header>
-        <Todo />
+        <PostForm />
+        <hr/>
+        <Post />
       </div>
     );
   }
