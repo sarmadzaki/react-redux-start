@@ -1,7 +1,7 @@
 
-import todo from '../reducers/todo'
+import postReducer from '../reducers/postReducer'
 import { combineReducers } from 'redux'
 
 export default combineReducers({
-    todo
+     posts: postReducer
 });

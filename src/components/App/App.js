@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../../logo.svg';
 import './App.css';
-// import Todo from '../Todo/todo'
 import Post from "../Post/Posts"
 import PostForm from '../Post/Postform';
 class App extends Component {
