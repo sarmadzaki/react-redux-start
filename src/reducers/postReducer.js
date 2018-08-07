@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POSTS } from '../actions/POST_ACTIONS_TYPES'
+import { FETCH_POSTS, NEW_POSTS } from '../actions/POST/POST_ACTIONS_TYPES'
 
 
 const initialState = {
