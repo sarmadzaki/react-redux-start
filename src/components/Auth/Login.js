@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import './Login.css';
+import { loginWithGmail } from '../../actions/AUTH/AUTH_ACTIONS'
 class Login extends Component {
     styleNone= {
         textAlign: 'center'
+    }
+    constructor(props) {
+        super(props);
+        console.log(props);
     }
   render() {
       return (
@@ -29,7 +36,7 @@ class Login extends Component {
                     Login with Facebook
                 </button>
 
-                <button className="loginBtn loginBtn--google">
+                <button className="loginBtn loginBtn--google" onClick={() => this.props.loginWithGmail()}>
                 Login with Google
                 </button>
         </div>
@@ -37,4 +44,11 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+Login.propTypes = {
+    loginWithGmail: PropTypes.func.isRequired
+}
+const mapStateToProps = state => ({
+    
+})
+export default connect(mapStateToProps, { loginWithGmail })(Login);
