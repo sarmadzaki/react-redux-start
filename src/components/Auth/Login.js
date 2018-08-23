@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './Login.css';
-import { loginWithGmail } from '../../actions/AUTH/AUTH_ACTIONS'
+import { loginWithGmail ,logout} from '../../actions/AUTH/AUTH_ACTIONS'
+import {firebaseConf as firebase} from '../../config/firebase'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class Login extends Component {
     styleNone= {
         textAlign: 'center'
@@ -10,10 +13,25 @@ class Login extends Component {
     constructor(props) {
         super(props);
         console.log(props);
+        
+    }
+    login = () => {
+        this.props.loginWithGmail().then(response => {
+            if(response) {
+                console.log(response)
+                // toast('Successfully logged in :)');
+            }
+        }).catch (error => {
+            // toast('Error occurred while logging in!')
+        });
+    }
+    logout = () => {
+        logout();
     }
   render() {
       return (
         <div className="container">
+        <ToastContainer />
         <div className="card card-container">
             <img id="profile-img" alt="Login" className="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" className="profile-name-card"></p>
@@ -36,9 +54,10 @@ class Login extends Component {
                     Login with Facebook
                 </button>
 
-                <button className="loginBtn loginBtn--google" onClick={() => this.props.loginWithGmail()}>
+                <button className="loginBtn loginBtn--google" onClick={() => this.login()}>
                 Login with Google
                 </button>
+                <button onClick={() => this.logout()}>logout</button>
         </div>
     </div>
     );
