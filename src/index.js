@@ -8,12 +8,14 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import store from './stores/store'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Posts from './components/Post/Posts';
+import Home from './components/Home';
 ReactDOM.render(
     <Provider store={store}>
         <Router>
             <div>
-                <Route path="/" component={App} />
+                <Route exact path="/" component={App} />
                 <Route path="/post" component={Posts} />
+                <Route  path="/home" component={Home} />
             </div>
         </Router>
     </Provider>,
