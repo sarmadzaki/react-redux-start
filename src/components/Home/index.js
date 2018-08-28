@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import Login from '../Auth/Login';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
 
   }
   render() {
@@ -13,5 +16,7 @@ class Home extends Component {
     );
   }
 }
-
-export default Home;
+const mapDistpatchToProps = state => ({
+  userData: state
+})
+export default connect(Login)(Home);

@@ -12,13 +12,21 @@ class Login extends Component {
     }
     constructor(props) {
         super(props);
-
+        this.state = {
+            userData: {}
+        }
     }
     login = async () => {
         try {
-            let wait = await this.props.loginWithGmail()
+            let response = await this.props.loginWithGmail();
+            if (response) {
+                console.log(response)
+                this.props.history.push('/home')
+            }
 
-        } catch {}
+        } catch (error) {
+            console.log('LOGIN ERROR', error)
+        }
     }
     logout = () => {
         logout();
@@ -63,6 +71,6 @@ Login.propTypes = {
     loginWithGmail: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
-
+    userData: state.userData
 })
 export default withRouter(connect(mapStateToProps, { loginWithGmail })(Login));
