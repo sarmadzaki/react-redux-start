@@ -6,11 +6,11 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+    console.log('LOGIN WITH GMAIL',action);
     switch (action.type) {
         case LOGIN_WITH_GMAIL:
-            console.log('LOGIN WITH GMAIL');
+        console.log('LOGIN WITH GMAIL:::::::::');
             return {
-                ...state,
                 userData: action.payload
             }
         default:

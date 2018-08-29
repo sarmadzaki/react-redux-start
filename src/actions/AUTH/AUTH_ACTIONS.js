@@ -13,9 +13,9 @@ export const loginWithGmail = () => dispatch => {
         firebase.auth().signInWithPopup(provider).then(result => {
             if (result) {
                 let token = result.credential.accessToken;
-                let user = result.user;
+                let user = result.user.providerData[0];
                 let data = Object.assign({}, { ...token, ...user });
-                dispatch({ type: LOGIN_WITH_GMAIL, payload: data });
+                dispatch({ type: LOGIN_WITH_GMAIL, payload: user });
                 toast('Successfully Logged in!')
                 resolve(result);
             }
@@ -31,11 +31,11 @@ export const loginWithGmail = () => dispatch => {
 
 }
 export const logout = () => {
-    firebase.auth().signOut().then(function () {
+    firebase.auth().signOut().then( () => {
         toast('Log out successfully');
 
     }, (error) => {
-        // An error happened.
         console.log(error);
+        toast(error);
     });
 }

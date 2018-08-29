@@ -12,9 +12,7 @@ class Login extends Component {
     }
     constructor(props) {
         super(props);
-        this.state = {
-            userData: {}
-        }
+        console.log(this.props)
     }
     login = async () => {
         try {
@@ -40,8 +38,8 @@ class Login extends Component {
                     <p id="profile-name" className="profile-name-card"></p>
                     <form className="form-signin">
                         <span id="reauth-email" className="reauth-email"></span>
-                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" required autoFocus />
-                        <input type="password" id="inputPassword" className="form-control" placeholder="Password" required />
+                        <input type="email" id="inputEmail" className="form-control" placeholder="Email address" autoComplete="off" required autoFocus />
+                        <input type="password" id="inputPassword" className="form-control" placeholder="Password" autoComplete="off" required autoFocus/>
                         <div id="remember" className="checkbox">
                             <label>
                                 <input type="checkbox" value="remember-me" /> Remember me
@@ -71,6 +69,6 @@ Login.propTypes = {
     loginWithGmail: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
-    userData: state.userData
-})
+    userData: state.authReducer
+});
 export default withRouter(connect(mapStateToProps, { loginWithGmail })(Login));
