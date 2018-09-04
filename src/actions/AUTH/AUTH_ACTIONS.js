@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export const loginWithGmail = () => dispatch => {
     return new Promise((resolve, reject) => {
         if (firebase.auth().currentUser) {
-           return resolve({logged: true});
+            return resolve({ logged: true });
         }
         let provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider).then(result => {
@@ -15,6 +15,7 @@ export const loginWithGmail = () => dispatch => {
                 let token = result.credential.accessToken;
                 let user = result.user.providerData[0];
                 let data = Object.assign({}, { ...token, ...user });
+                console.log(token, user)
                 dispatch({ type: LOGIN_WITH_GMAIL, payload: user });
                 toast('Successfully Logged in!')
                 resolve(result);
@@ -31,11 +32,39 @@ export const loginWithGmail = () => dispatch => {
 
 }
 export const logout = () => {
-    firebase.auth().signOut().then( () => {
+    firebase.auth().signOut().then(() => {
         toast('Log out successfully');
 
     }, (error) => {
         console.log(error);
         toast(error);
     });
+}
+
+/* export const loginWithEmailAndPassword = async () => dispatch => {
+} */
+
+export const registerUser = async (data) => {
+    try {
+        let response = await firebase.auth().createUserWithEmailAndPassword(data.email, data.password);
+        if (!response) return console.log('somethign went wrong');
+        let userRef = firebase.database().ref('/users');
+        if (!userRef) {
+            let dbResponse = await firebase.database().ref('/users').set({
+                username: data.username,
+                email: data.email,
+                password: data.password
+            });
+            if (dbResponse) return toast('Successfully Registered');
+        }
+       let pushResponse = userRef.push({
+            username: data.username,
+            email: data.email,
+            password: data.password
+        });
+        if(pushResponse) return toast('Successfully registered');
+    }
+    catch (error) {
+        toast(error.message);
+    }
 }

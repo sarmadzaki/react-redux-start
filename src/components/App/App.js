@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Login from '../Auth/Login';
+import Auth from '../Auth/Auth-Container';
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-       <Login />
+       <Auth />
       </div>
     );
   }
