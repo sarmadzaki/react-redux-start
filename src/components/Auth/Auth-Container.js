@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './Auth.css';
-import { loginWithGmail, logout, registerUser } from '../../actions/AUTH/AUTH_ACTIONS';
+import { loginWithGmail, logout, registerUser, loginWithEmailAndPassword } from '../../actions/AUTH/AUTH_ACTIONS';
 import { withRouter } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,8 @@ class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = { view: true }
+
+        console.log('constructor props',props);
     }
     loginwithgmail = async () => {
         try {
@@ -24,6 +26,7 @@ class Auth extends Component {
             }
 
         } catch (error) {
+            toast(error.massage);
             console.log('LOGIN ERROR', error)
         }
     }
@@ -35,14 +38,19 @@ class Auth extends Component {
         let username = e.target[0].value;
         let email = e.target[1].value;
         let password = e.target[2].value;
-      let registered = await registerUser({username,email,password});
-      if(registered) console.log('registered', registered);
-      console.log('registerdsad',registered)
+        let registered = await registerUser({ username, email, password });
+        if (registered) console.log('registered', registered);
+        console.log('registerdsad', registered)
     }
     updateView = () => {
         console.log('update view');
         console.log(this.state.view);
         this.setState({ view: !this.state.view });
+    }
+    loginWithEmailAndPassword = async (e) => {
+        let email = e.target[0].value;
+        let password = e.target[1].value;
+        loginWithEmailAndPassword(email, password);
     }
     render() {
         return (
@@ -54,10 +62,11 @@ class Auth extends Component {
                             <LoginView
                                 loginWithGmail={this.loginwithgmail}
                                 logout={this.logout}
-                                updateView={this.updateView} /> :
+                                updateView={this.updateView}
+                                loginWithEmailAndPassword={this.loginWithEmailAndPassword} /> :
                             <RegisterView
                                 updateView={this.updateView}
-                                register={this.register} />}
+                                register={this.register}/>}
                 </div>
             </div>
         );
@@ -65,9 +74,10 @@ class Auth extends Component {
 }
 
 Auth.propTypes = {
-    loginWithGmail: PropTypes.func.isRequired
+    loginWithGmail: PropTypes.func.isRequired,
+    registerUser: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
     userData: state.authReducer
 });
-export default withRouter(connect(mapStateToProps, { loginWithGmail })(Auth));
+export default withRouter(connect(mapStateToProps, { loginWithGmail, logout, registerUser })(Auth));

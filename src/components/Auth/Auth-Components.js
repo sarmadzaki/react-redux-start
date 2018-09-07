@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export const LoginView = (props) => {
     let styleNone = {
         textAlign: 'center'
     }
+    console.log(props)
     return (
         <div className="container">
             <div className="card card-container">
                 <img id="profile-img" alt="Login" className="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
                 <p id="profile-name" className="profile-name-card"></p>
-                <form className="form-signin" onSubmit={(e) => { props.register(e) }}>
+                <form className="form-signin" onSubmit={(e) => { props.loginWithEmailAndPassword(e) }}>
                     <span id="reauth-email" className="reauth-email"></span>
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" autoComplete="off" required autoFocus />
                     <input type="password" id="inputPassword" className="form-control" placeholder="Password" autoComplete="off" required autoFocus />
@@ -37,7 +38,7 @@ export const RegisterView = (props) => {
                 <p id="profile-name" className="profile-name-card"></p>
                 <form className="form-signin" onSubmit={(e) => { props.register(e) }}>
                     <span id="reauth-email" className="reauth-email"></span>
-                    <input type="text" id="inputEmail" className="form-control" placeholder="Username" autoComplete="off" required autoFocus />
+                    <input type="text" id="inputUsername" className="form-control" placeholder="Username" autoComplete="off" required autoFocus />
                     <input type="email" id="inputEmail" className="form-control" placeholder="Email address" autoComplete="off" required autoFocus />
                     <input type="password" id="inputPassword" className="form-control" placeholder="Password" autoComplete="off" required autoFocus />
                     <button className="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign Up</button>
