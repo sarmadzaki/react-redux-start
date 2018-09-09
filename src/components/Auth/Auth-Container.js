@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import './Auth.css';
-import { loginWithGmail, logout, registerUser, loginWithEmailAndPassword } from '../../actions/AUTH/AUTH_ACTIONS';
+import { loginWithGmail, logout, registerUser, loginWithEmailAndPassword as loginAsEmailAndPassword } from '../../actions/AUTH/AUTH_ACTIONS';
 import { withRouter } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,7 @@ class Auth extends Component {
         super(props);
         this.state = { view: true }
 
-        console.log('constructor props',props);
+        console.log('constructor props', props);
     }
     loginwithgmail = async () => {
         try {
@@ -48,9 +48,13 @@ class Auth extends Component {
         this.setState({ view: !this.state.view });
     }
     loginWithEmailAndPassword = async (e) => {
-        let email = e.target[0].value;
-        let password = e.target[1].value;
-        loginWithEmailAndPassword(email, password);
+        e.preventDefault();
+       let response = await loginAsEmailAndPassword(e.target[0].value, e.target[1].value);
+       if(response) {
+           
+       } else {
+           console.log('Error');
+       }
     }
     render() {
         return (
@@ -66,7 +70,7 @@ class Auth extends Component {
                                 loginWithEmailAndPassword={this.loginWithEmailAndPassword} /> :
                             <RegisterView
                                 updateView={this.updateView}
-                                register={this.register}/>}
+                                register={this.register} />}
                 </div>
             </div>
         );
@@ -75,9 +79,10 @@ class Auth extends Component {
 
 Auth.propTypes = {
     loginWithGmail: PropTypes.func.isRequired,
-    registerUser: PropTypes.func.isRequired
+    registerUser: PropTypes.func.isRequired,
+    loginAsEmailAndPassword: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
     userData: state.authReducer
 });
-export default withRouter(connect(mapStateToProps, { loginWithGmail, logout, registerUser })(Auth));
+export default withRouter(connect(mapStateToProps, { loginWithGmail, logout, registerUser, loginAsEmailAndPassword })(Auth));

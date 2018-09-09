@@ -18,18 +18,19 @@ export const registerUser = async (data) => {
             });
             if (dbResponse) return toast('Successfully Registered');
         }
-       let pushResponse = userRef.push({
+        let pushResponse = userRef.push({
             uid: response.user.uid,
             username: data.username,
             email: data.email,
             password: data.password
         });
-        if(pushResponse) return toast('Successfully registered');
+        if (pushResponse) return toast('Successfully registered');
     }
     catch (error) {
         toast(error.message);
     }
 }
+
 export const loginWithGmail = () => dispatch => {
     return new Promise((resolve, reject) => {
         if (firebase.auth().currentUser) {
@@ -45,23 +46,19 @@ export const loginWithGmail = () => dispatch => {
             }
         }).catch(error => {
             console.log(error);
-            /* let errorCode = error.code;
-            let errorMessage = error.message;
-            let email = error.email;
-            let credential = error.credential; */
             reject(error);
         });
     });
-
 }
 
-export const loginWithEmailAndPassword = async (email, password) => dispatch => {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(resp => {
-        console.log(resp);
-
-    }).catch(err => {e
-        console.log(err.message);
-    })
+export const loginWithEmailAndPassword = async (email, password) => {
+    try {
+        let response = await firebase.auth().signInWithEmailAndPassword(email, password);
+        if(response) return toast('Successfully logged in');
+    }
+    catch (error) {
+        toast(error.message);
+    }
 }
 
 export const logout = () => {
